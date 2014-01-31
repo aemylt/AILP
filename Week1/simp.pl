@@ -1,0 +1,9 @@
+simp(times(U,1),R):-simp(U,R).
+simp(plus(U,0),R):-simp(U,R).
+simp(plus(U,U),times(2,R)):-simp(U,R).
+simp(minus(U,U),0).
+simp(plus(X,Y),plus(RX,RY)):-simp(X,RX),simp(Y,RY).
+simp(minus(X,Y),minus(RX,RY)):-simp(X,RX),simp(Y,RY).
+simp(times(X,Y),times(RX,RY)):-simp(X,RX),simp(Y,RY).
+simp(divide(X,Y),divide(RX,RY)):-simp(X,RX),simp(Y,RY).
+simp(X,X).
