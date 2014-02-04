@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-gb" xml:lang="en-gb">
+<title>COMS30106 Assignment 1</title>
+<head>
+<meta name="style" content="cs" />
+<meta name="edit" content="true" />
+<body>
+
+
+<h1> 		 Assignment 1 - Preview </h1>
+* NOT FINALISED - SUBJECT TO CHANGE *	
+
+Assignment 1 overview</h2>
+
+<p>
+The learning goals covered in this assignment:
+</p><p>
+<ol>
+<li>
+Prolog - facts, predicates; querying them and writing your own
+</li><li>
+Introducing searching
+</li><li>
+Introducing backtracking
+</li>
+</ol>
+
+
+
+<h2> About the code</h2>
+<p>
+Download the zip file for assignment 1 <a href="assignment1.zip">here</a>.
+</p>
+<p>
+There are two files you will need to look at:
+<br/>
+<code>assignment1.pl</code>
+<br/>
+<code>library/assignment1_library.pl</code>
+</p><p>
+To find the answers you should not change anything in the library file (though you may
+want to make a small change in order to test Q5b). 
+You will have to use some of the predicates though.
+<br/>
+<br/>
+Note. The only predicates you can call in the library files are declared in the module call at the 
+top of this library file.
+</p>
+
+
+
+<h2>Before starting</h2>
+<p>
+<ol>
+<li>Open <code>assignment1.pl</code>. Change the candidate_number fact to use your own candidate number.</li>
+<li>Read the readme.txt file for info on how to run these assignments</li>
+</ol>
+</p>
+
+
+
+
+<h2> The world and agents</h2>
+
+<ul>
+<li>Start assignment 1 (see readme.txt) and view the web page. Make sure you have 
+run both the <code>?-start.</code> and <code>?-reset.</code> queries.
+<li>You should see a grid world, and an agent at a particular position in this world.
+<li>The agent can move around the grid horizontally or vertically (north, south, east or west).
+<li>The questions in this assignment look at how we move within and search this world using prolog.
+<li>The prolog code is linked with this web page and javascript is used to display the 
+world. You don't need to worry about this though, you'll just be using the 2 prolog 
+files we've supplied for this assignment Of course, feel free to take a look 
+if you wish!
+<li>You will notice a term <code>p(X,Y)</code> is used. This represents a position in the grid world. 
+</ul>
+
+
+
+
+<h2>Submission instructions</h2>
+<p>
+You should submit a single prolog file with name in the following format <code>ailp_assigment1_candidate-number.pl</code>.
+
+</p><p>
+E.g. <code>ailp_assignment1_12345.pl</code>
+</p><p>
+This file will contain the answers to each question in the form of a prolog fact or predicate.
+</p><p>
+At the top of the prolog file give the candidate number fact:
+</p><p>
+candidate_number(12345).
+</p>
+<p>
+The answers should be of 1 of the following types:
+<ul>
+<li>A prolog query in single quotes, e.g. <code>q1(prolog_query).</code></li>
+<li>A number, e.g. <code>q1(1).</code></li>
+<li>A prolog list e.g. <code>q1([1,2,3,4]).</code></li>
+<!--li>A prolog return statement in single quotes e.g. <code>q1(false).</code></li-->
+<li>A prolog predicate e.g. an implementation of <code>q8_spiral/1</code>.</li>
+</ul>
+</p>
+<p>
+If you load your answer script into prolog using for example <code>?-consult('assignment1_answers_12345.pl').</code>,
+then your answers should be returned when you give the following queries:
+<br/>
+<code>?-q1(A1).</code>
+<br/>
+<code>?-q2(A2).</code>
+<br/>
+etc ...
+</p>
+
+<p style="font-weight:bold">
+***** Check that this runs before submitting *****
+</p>
+
+
+
+
+
+<h2>Questions</h2>
+
+
+
+
+<h2>Part A: Querying prolog <!--'Get a feel for the code' questions - students should look at the code
+and make simple commands to call different predicates-->
+</h2>
+
+</p><p>
+Q1. After using the <code>?-reset.</code> query and pressing step in the web page, you should be able
+to see your agent at its start position.
+What prolog query would you use to retrieve this position?
+</p><p>
+Answer example: <code>q1(prolog_query).</code>
+</p><p>
+Q2. Using the <code>new_pos/3</code> predicate, answer the following:
+</p><p>
+Q2a. Suppose your agent is at position <code>p(1,1)</code> and should 
+move east. Write a query to retrieve the new position of your agent.
+</p><p>
+Answer example: <code>q2a(prolog_query).</code>
+</p><p>
+Q2b. Suppose your agent is at position <code>p(1,1)</code> and wants to 
+move north. Write a query to retrieve the new position of your agent. 
+</p><p>
+As you can see this query DOES NOT succeed.
+On what line of <code>assignment1.pl</code> does prolog fail?
+</p><p>
+Answer example: <code>q2b(7).</code>
+</p><p>
+Q3. 
+Look at the code and find the predicates (with 1 argument) that specify which direction the agent can move in.
+If an agent moves by simply calling this predicate, moving to the new position, then backtracking to retrieve another
+direction by calling this predicate again, what is the order of the directions that the agent will 
+move in?
+</p><p>
+Answer example: <code>q3([n,e,s,w]).</code>
+</p><p>
+
+
+
+
+<h2>Part B: Visualising search <!--'Look at the visualisation' questions - This looks at routes through the space
+using the web page-->
+</h2>
+<p>
+A path is a sequence of adjacent positions representing how the agent moves in the world.  
+
+</p><p>
+Q4. Run the query <code>?-next(L).</code>
+</p><p>
+Q4a.
+At some point the agent finds itself at a dead end and starts backtracking. 
+What is the path from the starting position right until the first dead end, just before the agent starts backtracking? 
+(make sure you give the whole path in your answer)
+</p><p>
+Answer example: <code>q4a([p(1, 1), p(1, 2), p(1, 3)]).</code>
+</p><p>
+Q4b.
+After backtracking once and thereby avoiding the first dead end, give the full path from the starting position to the second dead end. 
+</p><p>
+Answer example: <code>q4b([p(1, 1), p(1, 2), p(2, 2), p(2, 3)]).</code>
+</p>
+</p><p>
+Q4c.
+Give the first full path covering the whole grid found by the agent. <br>
+Hint: you may want to disable the visualisation to speed things up, by commenting out these lines: <br>
+<code>	%ailp_show_move(P,P1),</code><br>
+<code>	%do_command([mower,console,PsA],_R),</code>
+</p><p>
+Answer example: <code>q4c([p(1, 1), p(2, 1), p(3, 1), p(4, 1)]).</code>
+</p>
+Q4d.
+Give the second full path covering the whole grid found by the agent. <br>
+</p><p>
+Answer example: <code>q4d([p(1, 1), p(2, 1), p(3, 1), p(4, 1)]).</code>
+</p>
+
+
+
+<h2>Part C: Coding questions <!-- students need to write some predicates of their own, in order to traverse
+the world in different ways-->
+</h2>
+</p><p>
+Q5. 
+Look in <code>assignment_library.pl</code> and find the predicate <code>ailp_show_move/2</code>.
+This predicate moves your agent between squares in the grid.
+</p><p>
+Q5a.
+Write a predicate called <code>q5_corner_move/0</code> that moves the agent between all 4 corner squares in the world, in any order.
+The agent should not visit any other squares.
+</p><p>
+Answer: The <code>q5_corner_move/0</code> predicate you have declared.
+We should be able to run <code>?-q5_corner_move.</code> to see the visualisation
+in the web browser.
+</p><p>
+Q5b.
+The ailp_grid_size predicate changes the size of the grid.
+If you change this predicate to 5 for example, does your <code>q5_corner_move/0</code> predicate
+still work?
+<br/><br/>
+Write another predicate <code>q5_corner_move2/0</code> that uses this <code>ailp_grid_size/1</code>
+predicate so that the agent moves between the corners no matter the size of the grid.
+(i.e. the locations are not hard coded)
+</p><p>
+Answer: The <code>q5_corner_move2/0</code> predicate you have declared.
+We should be able to run <code>?-q5_corner_move2.</code> to see the visualisation
+in the web browser.
+</p><p>
+NB. Don't forget to change the grid size back after you have tested this!
+</p><p>
+Q6. Write a predicate <code>q6_spiral/1</code> that has a single argument.
+The agent should start in one of the outer squares (any square next to the edge of the board), 
+and cover the board in a spiral (either clockwise or anticlockwise) such that it ends in one of the 4 central positions.
+</p><p>
+NB: The <code>?-reset.</code> query sets the agents position to your start position, so the first thing your predicate will need to 
+do is move the agent to an outer square (of your choice) if it is not already on one of these.
+</p><p>
+Answer: The <code>q6_spiral/1</code> predicate you have declared.
+We should be able to run <code>?-q6_spiral(X).</code> to find the path and see the visualisation
+in the web browser.
+</p><p>
+NB. Use recursion / backtracking for this question.
+</p>
+</body>
+</html>
+
+
+
+
+
+
