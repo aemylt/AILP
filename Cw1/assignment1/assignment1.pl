@@ -25,7 +25,7 @@ m(e).
 m(w).
 m(n).
 
-candidate_number(12345).
+candidate_number(1120905).
 
 next(L) :-
  	ailp_start_position(p(X,Y)),
