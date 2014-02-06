@@ -31,7 +31,8 @@ q5_corner_move2 :- ailp_start_position(p(X,Y)),
 
 q6_spiral(R) :- ailp_start_position(P),
 	ailp_show_move(P, p(1,1)),
-	q6_spiral(p(1,1), e, [p(1,1)], R).
+	q6_spiral(p(1,1), e, [p(1,1)], R),
+	!.
 
 q6_spiral(_, _, R, R) :- complete(R).
 
