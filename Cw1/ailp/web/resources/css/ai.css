@@ -13,7 +13,8 @@ body {
 .trace {
 	float: right; 
 	width: 400px; 
-	height: 600px; 
+	height: 600px;
+	overflow: scroll;
 	background: rgb(240,240,240); 
 	word-wrap:break-word;
 	font-family: Courier; 
